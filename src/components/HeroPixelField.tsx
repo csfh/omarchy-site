@@ -12,6 +12,7 @@ import {
   resolveEffect,
   startEtch,
 } from '@/lib/etch'
+import { fieldBandRowInks } from '@/lib/field-bands'
 import { BANDS, loadMusic, music } from '@/lib/music'
 import type { Etch } from '@/lib/etch'
 
@@ -87,27 +88,7 @@ function wordWasHeld() {
   return heldAnswer
 }
 
-const LASER_BANDS = [
-  'crest',
-  'crest',
-  'crest',
-  'crest',
-  'crest',
-  'hover',
-  'hover',
-  'lit',
-  'lit',
-  'lit',
-  'lit',
-  'mid',
-  'mid',
-  'mid',
-  'dim',
-  'dim',
-  'dim',
-  'dim',
-  'dim',
-] as const
+const LASER_BANDS = fieldBandRowInks()
 
 /** How much of a band's height a beat adds, and how fast that fades. */
 const BEAT_REACH = 0.8
