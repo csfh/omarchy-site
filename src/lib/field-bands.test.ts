@@ -8,19 +8,20 @@ import {
   fieldBandRowInks,
 } from './field-bands.ts'
 
-test('wordmark bands are 3, 1, 3, 2, 4 units crest to dim', () => {
+test('wordmark bands are 4, 1, 4, 3, 5 units crest to dim', () => {
   assert.deepEqual(
     FIELD_BAND_UNITS.map(([ink, units]) => [ink, units]),
     [
-      ['crest', 3],
+      ['crest', 4],
       ['hover', 1],
-      ['lit', 3],
-      ['mid', 2],
-      ['dim', 4],
+      ['lit', 4],
+      ['mid', 3],
+      ['dim', 5],
     ],
   )
-  assert.equal(FIELD_BAND_ROWS, 13)
+  assert.equal(FIELD_BAND_ROWS, 17)
   assert.deepEqual(fieldBandRowInks(), [
+    'crest',
     'crest',
     'crest',
     'crest',
@@ -28,8 +29,11 @@ test('wordmark bands are 3, 1, 3, 2, 4 units crest to dim', () => {
     'lit',
     'lit',
     'lit',
+    'lit',
     'mid',
     'mid',
+    'mid',
+    'dim',
     'dim',
     'dim',
     'dim',
@@ -37,21 +41,21 @@ test('wordmark bands are 3, 1, 3, 2, 4 units crest to dim', () => {
   ])
 })
 
-test('bands fill the word: 3/13 crest through 4/13 dim', () => {
+test('bands fill the word: 4/17 crest through 5/17 dim', () => {
   assert.equal(fieldBandInkAtT(0), 'crest')
-  assert.equal(fieldBandInkAtT(3 / 13 - 1e-9), 'crest')
-  assert.equal(fieldBandInkAtT(3 / 13), 'hover')
-  assert.equal(fieldBandInkAtT(4 / 13), 'lit')
-  assert.equal(fieldBandInkAtT(7 / 13), 'mid')
-  assert.equal(fieldBandInkAtT(9 / 13), 'dim')
+  assert.equal(fieldBandInkAtT(4 / 17 - 1e-9), 'crest')
+  assert.equal(fieldBandInkAtT(4 / 17), 'hover')
+  assert.equal(fieldBandInkAtT(5 / 17), 'lit')
+  assert.equal(fieldBandInkAtT(9 / 17), 'mid')
+  assert.equal(fieldBandInkAtT(12 / 17), 'dim')
   assert.equal(fieldBandInkAtT(1), 'dim')
 })
 
-test('wordmark CSS bands are 3/13, 1/13, 3/13, 2/13, 4/13 of the height', () => {
+test('wordmark CSS bands are 4/17, 1/17, 4/17, 3/17, 5/17 of the height', () => {
   const css = fieldBandGradientCss()
-  assert.match(css, /0% 23\.077%/)
-  assert.match(css, /23\.077% 30\.769%/)
-  assert.match(css, /30\.769% 53\.846%/)
-  assert.match(css, /53\.846% 69\.231%/)
-  assert.match(css, /69\.231% 100%/)
+  assert.match(css, /0% 23\.529%/)
+  assert.match(css, /23\.529% 29\.412%/)
+  assert.match(css, /29\.412% 52\.941%/)
+  assert.match(css, /52\.941% 70\.588%/)
+  assert.match(css, /70\.588% 100%/)
 })
