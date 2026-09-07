@@ -1,5 +1,5 @@
 import { NOT_FOUND_HEIGHT, NOT_FOUND_WIDTH } from '@/data/not-found-bitmap'
-import { FIELD_BAND_UNITS } from '@/lib/field-bands'
+import { FIELD_BAND_UNITS, fieldBandGradientCss } from '@/lib/field-bands'
 import { cn } from '@/lib/utils'
 
 /** The square-spiral glyph from public/brand/omarchy-logo.svg, inlined. The
@@ -84,9 +84,7 @@ export function OmarchyMarkDrawn({ className }: { className?: string }) {
   )
 }
 
-export const WORDMARK_BANDS = `linear-gradient(to bottom, ${BAND_STOPS.map(
-  ([color, from, to]) => `${color} ${from}% ${to}%`,
-).join(', ')})`
+export const WORDMARK_BANDS = fieldBandGradientCss()
 
 type WordmarkProps = {
   className?: string
