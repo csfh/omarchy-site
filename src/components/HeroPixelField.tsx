@@ -12,7 +12,7 @@ import {
   resolveEffect,
   startEtch,
 } from '@/lib/etch'
-import { fieldBandInkAt } from '@/lib/field-bands'
+import { fieldBandInkAtT } from '@/lib/field-bands'
 import { BANDS, loadMusic, music } from '@/lib/music'
 import type { Etch } from '@/lib/etch'
 
@@ -311,17 +311,21 @@ export function HeroPixelField({
         if (Math.abs(ink.l - l) < Math.abs(best.l - l)) best = ink
       return best.css
     }
-    /** The resting ink of each row of the word, in this theme. Filled
-     *  after measure() has the cell size; one unit is one square cell. */
+    /** The resting ink of each row of the word, in this theme. */
     let restInks: string[] = []
     const buildRestInks = () => {
       restInks = []
+      const h = Math.max(1, glyph.height)
       for (let row = 0; row < glyph.height; row++) {
-        restInks.push(palette[fieldBandInkAt((row + 0.5) * wmCH, wmCW)])
+        restInks.push(palette[fieldBandInkAtT((row + 0.5) / h)])
       }
     }
+    buildRestInks()
     /** The resting ink at a device-px height within the word. */
-    const restInkAt = (cy: number) => palette[fieldBandInkAt(cy - wmY, wmCW)]
+    const restInkAt = (cy: number) => {
+      const h = glyph.height * wmCH
+      return palette[fieldBandInkAtT(h > 0 ? (cy - wmY) / h : 0)]
+    }
     /** A colour part way from one CSS colour to another. */
     const mix = (from: string, to: string, t: number) => {
       if (t <= 0) return from
