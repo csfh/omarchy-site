@@ -4,7 +4,7 @@ import {
   FIELD_BAND_ROWS,
   FIELD_BAND_UNITS,
   fieldBandGradientCss,
-  fieldBandInkAt,
+  fieldBandInkAtT,
   fieldBandRowInks,
 } from './field-bands.ts'
 
@@ -37,22 +37,21 @@ test('wordmark bands are 3, 1, 3, 2, 4 units crest to dim', () => {
   ])
 })
 
-test('one band unit is one square cell, not one 19-row slice', () => {
-  const unit = 51
-  assert.equal(fieldBandInkAt(0, unit), 'crest')
-  assert.equal(fieldBandInkAt(3 * unit - 0.01, unit), 'crest')
-  assert.equal(fieldBandInkAt(3 * unit, unit), 'hover')
-  assert.equal(fieldBandInkAt(4 * unit, unit), 'lit')
-  assert.equal(fieldBandInkAt(7 * unit, unit), 'mid')
-  assert.equal(fieldBandInkAt(9 * unit, unit), 'dim')
-  assert.equal(fieldBandInkAt(13 * unit, unit), 'dim')
+test('bands fill the word: 3/13 crest through 4/13 dim', () => {
+  assert.equal(fieldBandInkAtT(0), 'crest')
+  assert.equal(fieldBandInkAtT(3 / 13 - 1e-9), 'crest')
+  assert.equal(fieldBandInkAtT(3 / 13), 'hover')
+  assert.equal(fieldBandInkAtT(4 / 13), 'lit')
+  assert.equal(fieldBandInkAtT(7 / 13), 'mid')
+  assert.equal(fieldBandInkAtT(9 / 13), 'dim')
+  assert.equal(fieldBandInkAtT(1), 'dim')
 })
 
-test('wordmark CSS bands are n times --pxc', () => {
+test('wordmark CSS bands are 3/13, 1/13, 3/13, 2/13, 4/13 of the height', () => {
   const css = fieldBandGradientCss()
-  assert.match(css, /calc\(3 \* var\(--pxc\)\)/)
-  assert.match(css, /calc\(4 \* var\(--pxc\)\)/)
-  assert.match(css, /calc\(7 \* var\(--pxc\)\)/)
-  assert.match(css, /calc\(9 \* var\(--pxc\)\)/)
-  assert.match(css, /100%/)
+  assert.match(css, /0% 23\.077%/)
+  assert.match(css, /23\.077% 30\.769%/)
+  assert.match(css, /30\.769% 53\.846%/)
+  assert.match(css, /53\.846% 69\.231%/)
+  assert.match(css, /69\.231% 100%/)
 })
