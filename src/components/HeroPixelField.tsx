@@ -311,8 +311,8 @@ export function HeroPixelField({
         if (Math.abs(ink.l - l) < Math.abs(best.l - l)) best = ink
       return best.css
     }
-    /** The resting ink of each row of the word, in this theme. A word of
-     *  another height (the 404's) takes the bands in proportion. */
+    /** The resting ink of each row of the word, in this theme. Filled
+     *  after measure() has the cell size; one unit is one square cell. */
     let restInks: string[] = []
     const buildRestInks = () => {
       restInks = []
@@ -320,7 +320,6 @@ export function HeroPixelField({
         restInks.push(palette[fieldBandInkAt((row + 0.5) * wmCH, wmCW)])
       }
     }
-    buildRestInks()
     /** The resting ink at a device-px height within the word. */
     const restInkAt = (cy: number) => palette[fieldBandInkAt(cy - wmY, wmCW)]
     /** A colour part way from one CSS colour to another. */
