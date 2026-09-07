@@ -416,7 +416,7 @@ export async function startEtch(
     stepsPerSecond,
     palette.join(','),
     null,
-    true, // 3-1-3-2-4 field bands; palette is crest, hover, lit, mid, dim
+    true, // 4-1-4-3-5 field bands; palette is crest, hover, lit, mid, dim
   )
 
   // The frame exists only once the effect has stepped, and it may grow as
