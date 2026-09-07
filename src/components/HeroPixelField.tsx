@@ -12,7 +12,7 @@ import {
   resolveEffect,
   startEtch,
 } from '@/lib/etch'
-import { fieldBandRowInks } from '@/lib/field-bands'
+import { fieldBandInkAt } from '@/lib/field-bands'
 import { BANDS, loadMusic, music } from '@/lib/music'
 import type { Etch } from '@/lib/etch'
 
@@ -87,8 +87,6 @@ function wordWasHeld() {
     heldAnswer = document.documentElement.hasAttribute('data-etch-held')
   return heldAnswer
 }
-
-const LASER_BANDS = fieldBandRowInks()
 
 /** How much of a band's height a beat adds, and how fast that fades. */
 const BEAT_REACH = 0.8
@@ -319,16 +317,12 @@ export function HeroPixelField({
     const buildRestInks = () => {
       restInks = []
       for (let row = 0; row < glyph.height; row++) {
-        const band = Math.floor((row / glyph.height) * LASER_BANDS.length)
-        restInks.push(palette[LASER_BANDS[band]])
+        restInks.push(palette[fieldBandInkAt((row + 0.5) * wmCH, wmCW)])
       }
     }
     buildRestInks()
     /** The resting ink at a device-px height within the word. */
-    const restInkAt = (cy: number) => {
-      const row = Math.floor((cy - wmY) / wmCH)
-      return restInks[Math.max(0, Math.min(restInks.length - 1, row))]
-    }
+    const restInkAt = (cy: number) => palette[fieldBandInkAt(cy - wmY, wmCW)]
     /** A colour part way from one CSS colour to another. */
     const mix = (from: string, to: string, t: number) => {
       if (t <= 0) return from
@@ -614,6 +608,7 @@ export function HeroPixelField({
           ramp[r * cols + c] = shape * clear * clearOf(x, y)
         }
       }
+      buildRestInks()
       return true
     }
 
