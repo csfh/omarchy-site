@@ -363,7 +363,7 @@ export function HeroPixelField({
         glyph.rows,
         glyph.width,
         glyph.height,
-        [palette.lit, palette.hover, palette.crest],
+        [palette.crest, palette.hover, palette.lit, palette.mid, palette.dim],
         resolveEffect(effect),
       )
         .then((next) => {
