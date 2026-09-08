@@ -12,7 +12,7 @@ import {
   resolveEffect,
   startEtch,
 } from '@/lib/etch'
-import { fieldBandInkAtT } from '@/lib/field-bands'
+import { fieldBandInkAtRow } from '@/lib/field-bands'
 import { BANDS, loadMusic, music } from '@/lib/music'
 import type { Etch } from '@/lib/etch'
 
@@ -317,14 +317,18 @@ export function HeroPixelField({
       restInks = []
       const h = Math.max(1, glyph.height)
       for (let row = 0; row < glyph.height; row++) {
-        restInks.push(palette[fieldBandInkAtT((row + 0.5) / h)])
+        restInks.push(palette[fieldBandInkAtRow(row, h)])
       }
     }
     buildRestInks()
     /** The resting ink at a device-px height within the word. */
     const restInkAt = (cy: number) => {
-      const h = glyph.height * wmCH
-      return palette[fieldBandInkAtT(h > 0 ? (cy - wmY) / h : 0)]
+      if (wmCH <= 0 || restInks.length === 0) return palette.lit
+      const row = Math.min(
+        restInks.length - 1,
+        Math.max(0, Math.floor((cy - wmY) / wmCH)),
+      )
+      return restInks[row]!
     }
     /** A colour part way from one CSS colour to another. */
     const mix = (from: string, to: string, t: number) => {

@@ -47,6 +47,16 @@ export function fieldBandInkAtT(t: number): FieldBandInk {
   return last
 }
 
+/** Ink for bitmap row `row` when the glyph is `height` rows tall. */
+export function fieldBandInkAtRow(row: number, height = FIELD_BAND_ROWS): FieldBandInk {
+  const inks = fieldBandRowInks()
+  if (height === inks.length) {
+    const i = Math.min(inks.length - 1, Math.max(0, Math.floor(row)))
+    return inks[i]!
+  }
+  return fieldBandInkAtT((row + 0.5) / Math.max(1, height))
+}
+
 /** CSS linear-gradient: 4/19, 3/19, 4/19, 3/19, 5/19 of the word. */
 export function fieldBandGradientCss(
   colorOf: (ink: FieldBandInk) => string = (ink) => `var(--t-field-${ink})`,

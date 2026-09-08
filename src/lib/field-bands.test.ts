@@ -4,6 +4,7 @@ import {
   FIELD_BAND_ROWS,
   FIELD_BAND_UNITS,
   fieldBandGradientCss,
+  fieldBandInkAtRow,
   fieldBandInkAtT,
   fieldBandRowInks,
 } from './field-bands.ts'
@@ -51,6 +52,19 @@ test('bands fill the word: 4/19 crest through 5/19 dim', () => {
   assert.equal(fieldBandInkAtT(11 / 19), 'mid')
   assert.equal(fieldBandInkAtT(14 / 19), 'dim')
   assert.equal(fieldBandInkAtT(1), 'dim')
+})
+
+test('each of the 19 bitmap rows is one 4-3-4-3-5 unit', () => {
+  const rows = Array.from({ length: 19 }, (_, row) => fieldBandInkAtRow(row, 19))
+  assert.deepEqual(rows, fieldBandRowInks())
+  assert.equal(rows[3], 'crest')
+  assert.equal(rows[4], 'hover')
+  assert.equal(rows[6], 'hover')
+  assert.equal(rows[7], 'lit')
+  assert.equal(rows[10], 'lit')
+  assert.equal(rows[11], 'mid')
+  assert.equal(rows[13], 'mid')
+  assert.equal(rows[14], 'dim')
 })
 
 test('wordmark CSS bands are 4/19, 3/19, 4/19, 3/19, 5/19 of the height', () => {
