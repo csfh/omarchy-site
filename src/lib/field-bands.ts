@@ -10,12 +10,12 @@ export const FIELD_BAND_INKS = [
 export type FieldBandInk = (typeof FIELD_BAND_INKS)[number]
 
 /**
- * Band heights: 4, 1, 4, 3, 5. That field is 17 units tall; the site
- * wordmark is 19 bitmap rows. One unit is 1/17 of the word.
+ * Band heights: 4, 3, 4, 3, 5. That field is 19 units tall, one per
+ * wordmark bitmap row.
  */
 export const FIELD_BAND_UNITS: readonly [FieldBandInk, number][] = [
   ['crest', 4],
-  ['hover', 1],
+  ['hover', 3],
   ['lit', 4],
   ['mid', 3],
   ['dim', 5],
@@ -47,7 +47,7 @@ export function fieldBandInkAtT(t: number): FieldBandInk {
   return last
 }
 
-/** CSS linear-gradient: 4/17, 1/17, 4/17, 3/17, 5/17 of the word. */
+/** CSS linear-gradient: 4/19, 3/19, 4/19, 3/19, 5/19 of the word. */
 export function fieldBandGradientCss(
   colorOf: (ink: FieldBandInk) => string = (ink) => `var(--t-field-${ink})`,
 ): string {

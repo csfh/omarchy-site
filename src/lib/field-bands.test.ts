@@ -8,23 +8,25 @@ import {
   fieldBandRowInks,
 } from './field-bands.ts'
 
-test('wordmark bands are 4, 1, 4, 3, 5 units crest to dim', () => {
+test('wordmark bands are 4, 3, 4, 3, 5 units crest to dim', () => {
   assert.deepEqual(
     FIELD_BAND_UNITS.map(([ink, units]) => [ink, units]),
     [
       ['crest', 4],
-      ['hover', 1],
+      ['hover', 3],
       ['lit', 4],
       ['mid', 3],
       ['dim', 5],
     ],
   )
-  assert.equal(FIELD_BAND_ROWS, 17)
+  assert.equal(FIELD_BAND_ROWS, 19)
   assert.deepEqual(fieldBandRowInks(), [
     'crest',
     'crest',
     'crest',
     'crest',
+    'hover',
+    'hover',
     'hover',
     'lit',
     'lit',
@@ -41,21 +43,21 @@ test('wordmark bands are 4, 1, 4, 3, 5 units crest to dim', () => {
   ])
 })
 
-test('bands fill the word: 4/17 crest through 5/17 dim', () => {
+test('bands fill the word: 4/19 crest through 5/19 dim', () => {
   assert.equal(fieldBandInkAtT(0), 'crest')
-  assert.equal(fieldBandInkAtT(4 / 17 - 1e-9), 'crest')
-  assert.equal(fieldBandInkAtT(4 / 17), 'hover')
-  assert.equal(fieldBandInkAtT(5 / 17), 'lit')
-  assert.equal(fieldBandInkAtT(9 / 17), 'mid')
-  assert.equal(fieldBandInkAtT(12 / 17), 'dim')
+  assert.equal(fieldBandInkAtT(4 / 19 - 1e-9), 'crest')
+  assert.equal(fieldBandInkAtT(4 / 19), 'hover')
+  assert.equal(fieldBandInkAtT(7 / 19), 'lit')
+  assert.equal(fieldBandInkAtT(11 / 19), 'mid')
+  assert.equal(fieldBandInkAtT(14 / 19), 'dim')
   assert.equal(fieldBandInkAtT(1), 'dim')
 })
 
-test('wordmark CSS bands are 4/17, 1/17, 4/17, 3/17, 5/17 of the height', () => {
+test('wordmark CSS bands are 4/19, 3/19, 4/19, 3/19, 5/19 of the height', () => {
   const css = fieldBandGradientCss()
-  assert.match(css, /0% 23\.529%/)
-  assert.match(css, /23\.529% 29\.412%/)
-  assert.match(css, /29\.412% 52\.941%/)
-  assert.match(css, /52\.941% 70\.588%/)
-  assert.match(css, /70\.588% 100%/)
+  assert.match(css, /0% 21\.053%/)
+  assert.match(css, /21\.053% 36\.842%/)
+  assert.match(css, /36\.842% 57\.895%/)
+  assert.match(css, /57\.895% 73\.684%/)
+  assert.match(css, /73\.684% 100%/)
 })

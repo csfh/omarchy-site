@@ -105,7 +105,7 @@ export function effect_catalog() {
 }
 
 /**
- * Which 3-1-3-2-4 band `t` (0 at the top, 1 at the bottom) falls in.
+ * Which 4-3-4-3-5 band `t` (0 at the top, 1 at the bottom) falls in.
  * @param {number} t
  * @returns {number}
  */
